@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Heart Disease Predictor</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div id="loader-overlay">
+    <div class="loader-heart">
+      <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M60 110C60 110 10 75 10 40C10 18 38 10 60 35C82 10 110 18 110 40C110 75 60 110 60 110Z" fill="#e63946"/>
+      </svg>
+      <div class="loader-pulse"></div>
+    </div>
+  </div>
+  <div class="container" id="main-content" style="display:none;">
+    <div class="card animated fadeInDown">
+      <div class="header">
+        <i class="fa-solid fa-heart-pulse fa-2x heart-icon"></i>
+        <h2>Heart Disease Predictor</h2>
+        <p>Fill in the details below to check your risk.</p>
+      </div>
+      <form id="predict-form">
+        <div class="progress-bar" id="progress-bar"></div>
+        <div class="form-group">
+          <div class="label-row">
+            <label>Age</label>
+            <button type="button" class="info-btn" tabindex="-1"><i class="fa-solid fa-circle-info"></i></button>
+          </div>
+          <input type="number" name="age" required>
+          <div class="input-desc" style="display:none;">Your age in years.</div>
+        </div>
+        <div class="form-group">
+          <div class="label-row">
+            <label>Sex <span class="hint">(1=Male, 0=Female)</span></label>
+            <button type="button" class="info-btn" tabindex="-1"><i class="fa-solid fa-circle-info"></i></button>
+          </div>
+          <input type="number" name="sex" required>
+          <div class="input-desc" style="display:none;">1 for Male, 0 for Female.</div>
+        </div>
+        <div class="form-group">
+          <div class="label-row">
+            <label>Chest Pain Type</label>
+            <button type="button" class="info-btn" tabindex="-1"><i class="fa-solid fa-circle-info"></i></button>
+          </div>
+          <input type="number" name="cp" required>
+          <div class="input-desc" style="display:none;">Type of chest pain (0: Typical Angina, 1: Atypical Angina, 2: Non-anginal Pain, 3: Asymptomatic).</div>
+        </div>
+        <div class="form-group">
+          <div class="label-row">
+            <label>Resting BP</label>
+            <button type="button" class="info-btn" tabindex="-1"><i class="fa-solid fa-circle-info"></i></button>
+          </div>
+          <input type="number" name="trestbps" required>
+          <div class="input-desc" style="display:none;">Resting blood pressure (in mm Hg).</div>
+        </div>
+        <div class="form-group">
+          <div class="label-row">
+            <label>Cholesterol</label>
+            <button type="button" class="info-btn" tabindex="-1"><i class="fa-solid fa-circle-info"></i></button>
+          </div>
+          <input type="number" name="chol" required>
+          <div class="input-desc" style="display:none;">Serum cholesterol in mg/dl.</div>
+        </div>
+        <div class="form-group">
+          <div class="label-row">
+            <label>Fasting Sugar</label>
+            <button type="button" class="info-btn" tabindex="-1"><i class="fa-solid fa-circle-info"></i></button>
+          </div>
+          <input type="number" name="fbs" required>
+          <div class="input-desc" style="display:none;">Fasting blood sugar > 120 mg/dl (1 = True, 0 = False).</div>
+        </div>
+        <div class="form-group">
+          <div class="label-row">
+            <label>Resting ECG</label>
+            <button type="button" class="info-btn" tabindex="-1"><i class="fa-solid fa-circle-info"></i></button>
+          </div>
+          <input type="number" name="restecg" required>
+          <div class="input-desc" style="display:none;">Resting electrocardiographic results (0: Normal, 1: ST-T abnormality, 2: Left ventricular hypertrophy).</div>
+        </div>
+        <div class="form-group">
+          <div class="label-row">
+            <label>Max Heart Rate</label>
+            <button type="button" class="info-btn" tabindex="-1"><i class="fa-solid fa-circle-info"></i></button>
+          </div>
+          <input type="number" name="thalach" required>
+          <div class="input-desc" style="display:none;">Maximum heart rate achieved during test.</div>
+        </div>
+        <div class="form-group">
+          <div class="label-row">
+            <label>Exercise Induced Angina</label>
+            <button type="button" class="info-btn" tabindex="-1"><i class="fa-solid fa-circle-info"></i></button>
+          </div>
+          <input type="number" name="exang" required>
+          <div class="input-desc" style="display:none;">1 = Yes, 0 = No.</div>
+        </div>
+        <div class="form-group">
+          <div class="label-row">
+            <label>Oldpeak</label>
+            <button type="button" class="info-btn" tabindex="-1"><i class="fa-solid fa-circle-info"></i></button>
+          </div>
+          <input type="number" name="oldpeak" required>
+          <div class="input-desc" style="display:none;">ST depression induced by exercise relative to rest.</div>
+        </div>
+        <div class="form-group">
+          <div class="label-row">
+            <label>Slope</label>
+            <button type="button" class="info-btn" tabindex="-1"><i class="fa-solid fa-circle-info"></i></button>
+          </div>
+          <input type="number" name="slope" required>
+          <div class="input-desc" style="display:none;">Slope of the peak exercise ST segment (0: Upsloping, 1: Flat, 2: Downsloping).</div>
+        </div>
+        <div class="form-group">
+          <div class="label-row">
+            <label>Number of Vessels</label>
+            <button type="button" class="info-btn" tabindex="-1"><i class="fa-solid fa-circle-info"></i></button>
+          </div>
+          <input type="number" name="ca" required>
+          <div class="input-desc" style="display:none;">Number of major vessels colored by fluoroscopy (0–3).</div>
+        </div>
+        <div class="form-group">
+          <div class="label-row">
+            <label>Thalassemia</label>
+            <button type="button" class="info-btn" tabindex="-1"><i class="fa-solid fa-circle-info"></i></button>
+          </div>
+          <input type="number" name="thal" required>
+          <div class="input-desc" style="display:none;">3 = Normal, 6 = Fixed defect, 7 = Reversible defect.</div>
+        </div>
+        <button type="submit" class="animated pulse">Predict <i class="fa-solid fa-arrow-right"></i></button>
+      </form>
+    </div>
+    <div id="result-modal" class="modal">
+      <div class="modal-content animated zoomIn">
+        <span class="close-btn">&times;</span>
+        <div id="result"></div>
+      </div>
+    </div>
+  </div>
+  <script src="/script.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', function() {
+      setTimeout(function() {
+        document.getElementById('loader-overlay').classList.add('fade-out');
+        setTimeout(function() {
+          document.getElementById('loader-overlay').style.display = 'none';
+          document.getElementById('main-content').style.display = 'flex';
+        }, 700);
+      }, 1400);
+    });
+  </script>
+</body>
+</html>
