@@ -9,20 +9,19 @@ A modern, interactive web application that predicts the likelihood of heart dise
 - **Responsive design** for desktop and mobile
 - **Result modal** with animated feedback
 
-
 ## Tech Stack
 - **Backend:** Python, Flask, scikit-learn (model in `heart_model.pkl`)
 - **Frontend:** HTML5, CSS3, JavaScript (Vanilla), Font Awesome
 
-## Setup Instructions
+## Setup Instructions (Local)
 1. **Clone the repository**
    ```bash
-   git clone <https://github.com/Akshat295/Heart-disease-predictor.git>
+   git clone <your-repo-url>
    cd heart_disease_predictor
    ```
 2. **Install dependencies**
    ```bash
-   pip install flask numpy
+   pip install -r requirements.txt
    ```
 3. **Ensure model file is present**
    - The file `heart_model.pkl` should be in the project root.
@@ -32,6 +31,18 @@ A modern, interactive web application that predicts the likelihood of heart dise
    ```
 5. **Open in browser**
    - Visit [http://localhost:5000](http://localhost:5000)
+
+## Deployment on Render
+1. **Push your code to GitHub.**
+2. **Create a new Web Service on [Render](https://render.com/).**
+3. **Connect your GitHub repository.**
+4. **Render will auto-detect your Python app.**
+   - Ensure you have `requirements.txt` and `Procfile` in your root directory.
+   - The `Procfile` should contain:
+     ```
+     web: gunicorn app:app
+     ```
+5. **Deploy!**
 
 ## Usage
 - Fill in the medical parameters in the form.
@@ -59,6 +70,8 @@ A modern, interactive web application that predicts the likelihood of heart dise
 heart_disease_predictor/
 ├── app.py
 ├── heart_model.pkl
+├── requirements.txt
+├── Procfile
 ├── script.js
 ├── static/
 │   └── style.css
@@ -66,3 +79,7 @@ heart_disease_predictor/
 │   └── index.html
 └── README.md
 ```
+
+## Notes
+- Static files (JS, CSS) are referenced using Flask's `url_for('static', filename='...')` in templates for compatibility with all environments.
+- The app is ready for deployment on Render or any WSGI-compatible host.
