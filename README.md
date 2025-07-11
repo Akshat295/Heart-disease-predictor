@@ -32,18 +32,6 @@ A modern, interactive web application that predicts the likelihood of heart dise
 5. **Open in browser**
    - Visit [http://localhost:5000](http://localhost:5000)
 
-## Deployment on Render
-1. **Push your code to GitHub.**
-2. **Create a new Web Service on [Render](https://render.com/).**
-3. **Connect your GitHub repository.**
-4. **Render will auto-detect your Python app.**
-   - Ensure you have `requirements.txt` and `Procfile` in your root directory.
-   - The `Procfile` should contain:
-     ```
-     web: gunicorn app:app
-     ```
-5. **Deploy!**
-
 ## Usage
 - Fill in the medical parameters in the form.
 - Click the **Predict** button.
